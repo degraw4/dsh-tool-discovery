@@ -1,0 +1,40 @@
+name: Check
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python3 -m unittest discover -s bench -p 'test_*.py'
+      - run: python3 bench/report.py --check
+      - run: python3 scripts/check_release.py
+  plugin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: deepseek-ai/deepseek-harness
+          ref: d743267388641bc76f17c45ce8b4c231aed1d32c
+          path: .ci/dsh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.5
+          run_install: false
+      - run: pnpm install --frozen-lockfile
+        working-directory: .ci/dsh
+      - run: pnpm run build
+        working-directory: .ci/dsh
+      - run: node scripts/bootstrap.mjs .ci/dsh
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build

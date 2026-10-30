@@ -1,0 +1,94 @@
+{
+  "toolsets": [
+    {
+      "name": "charts",
+      "description": "Charts and sparklines",
+      "tools": [
+        "mcp__excel__create_chart",
+        "mcp__excel__delete_chart",
+        "mcp__excel__add_sparklines",
+        "mcp__excel__delete_sparklines"
+      ]
+    },
+    {
+      "name": "pivot",
+      "description": "Pivot tables and slicers",
+      "tools": [
+        "mcp__excel__create_pivot_table",
+        "mcp__excel__delete_pivot_table",
+        "mcp__excel__add_slicer",
+        "mcp__excel__delete_slicer"
+      ]
+    },
+    {
+      "name": "layout",
+      "description": "Sheet layout and cell formatting",
+      "tools": [
+        "mcp__excel__set_sheet_layout",
+        "mcp__excel__format_range",
+        "mcp__excel__merge_cells"
+      ]
+    },
+    {
+      "name": "validation",
+      "description": "Conditional formatting, validation and tables",
+      "tools": [
+        "mcp__excel__add_conditional_format",
+        "mcp__excel__add_data_validation",
+        "mcp__excel__set_table"
+      ]
+    },
+    {
+      "name": "transform",
+      "description": "Range transformation and sorting",
+      "tools": [
+        "mcp__excel__transform_range",
+        "mcp__excel__sort_range",
+        "mcp__excel__find_cells",
+        "mcp__excel__replace_cells"
+      ]
+    },
+    {
+      "name": "settings",
+      "description": "Workbook settings and inspection",
+      "tools": [
+        "mcp__excel__set_workbook_settings",
+        "mcp__excel__describe_workbook"
+      ]
+    },
+    {
+      "name": "pdf",
+      "description": "PDF reading and search",
+      "tools": [
+        "mcp__pdf__read_pdf_pages",
+        "mcp__pdf__get_pdf_info",
+        "mcp__pdf__merge_pdfs",
+        "mcp__pdf__extract_pdf_pages",
+        "mcp__pdf__search_pdf_content",
+        "mcp__pdf__search_pdf_next_page",
+        "mcp__pdf__search_pdf_prev_page",
+        "mcp__pdf__search_pdf_go_page",
+        "mcp__pdf__search_pdf_info"
+      ]
+    },
+    {
+      "name": "memory",
+      "description": "Knowledge graph memory",
+      "tools": [
+        "mcp__memory__create_entities",
+        "mcp__memory__create_relations",
+        "mcp__memory__add_observations",
+        "mcp__memory__delete_entities",
+        "mcp__memory__delete_observations",
+        "mcp__memory__delete_relations",
+        "mcp__memory__read_graph",
+        "mcp__memory__search_nodes",
+        "mcp__memory__open_nodes"
+      ]
+    }
+  ],
+  "deferSchemaBytes": 1024,
+  "alwaysInline": ["mcp__excel__format_range", "mcp__excel__set_sheet_layout"],
+  "maxToolsPerQuery": 8,
+  "maxDocumentBytes": 24000
+}

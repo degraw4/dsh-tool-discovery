@@ -1,0 +1,521 @@
+{
+  "successfulExecutions": {
+    "full": {
+      "runs": 40,
+      "passed": 40,
+      "modelCalls": 416,
+      "durationMs": 2556987,
+      "costCny": "6.7084104",
+      "usage": {
+        "inputTokens": 1385262,
+        "cacheReadTokens": 13794560,
+        "cacheWriteTokens": 0,
+        "outputTokens": 423263
+      }
+    },
+    "selective": {
+      "runs": 40,
+      "passed": 40,
+      "modelCalls": 403,
+      "durationMs": 2553278,
+      "costCny": "6.271752",
+      "usage": {
+        "inputTokens": 1217760,
+        "cacheReadTokens": 11846400,
+        "cacheWriteTokens": 0,
+        "outputTokens": 420297
+      }
+    }
+  },
+  "initialAttempts": {
+    "full": {
+      "runs": 40,
+      "passed": 38,
+      "modelCalls": 416,
+      "durationMs": 2581523,
+      "costCny": "6.75340888",
+      "usage": {
+        "inputTokens": 1387839,
+        "cacheReadTokens": 13871872,
+        "cacheWriteTokens": 0,
+        "outputTokens": 427857
+      }
+    },
+    "selective": {
+      "runs": 40,
+      "passed": 36,
+      "modelCalls": 401,
+      "durationMs": 2555683,
+      "costCny": "6.25212208",
+      "usage": {
+        "inputTokens": 1207154,
+        "cacheReadTokens": 11706752,
+        "cacheWriteTokens": 0,
+        "outputTokens": 421193
+      }
+    }
+  },
+  "allAttempts": {
+    "full": {
+      "runs": 42,
+      "passed": 40,
+      "modelCalls": 435,
+      "durationMs": 2672658,
+      "costCny": "7.02431344",
+      "usage": {
+        "inputTokens": 1457270,
+        "cacheReadTokens": 14455936,
+        "cacheWriteTokens": 0,
+        "outputTokens": 441442
+      }
+    },
+    "selective": {
+      "runs": 45,
+      "passed": 40,
+      "modelCalls": 452,
+      "durationMs": 2900704,
+      "costCny": "7.091348",
+      "usage": {
+        "inputTokens": 1371458,
+        "cacheReadTokens": 13254400,
+        "cacheWriteTokens": 0,
+        "outputTokens": 477282
+      }
+    }
+  },
+  "selection": {
+    "rule": "first normally completed and grader-passing attempt per task, strategy and repeat",
+    "complete": true,
+    "selectedCount": 80,
+    "recordedCount": 87,
+    "runIds": [
+      "excel-data-transformation-full-r1-a1",
+      "excel-data-transformation-full-r2-a1",
+      "excel-data-transformation-full-r3-a1",
+      "excel-data-transformation-full-r4-a2",
+      "excel-data-transformation-full-r5-a1",
+      "excel-data-transformation-full-r6-a1",
+      "excel-data-transformation-full-r7-a1",
+      "excel-data-transformation-full-r8-a1",
+      "excel-data-transformation-full-r9-a1",
+      "excel-data-transformation-full-r10-a1",
+      "excel-data-transformation-selective-r1-a1",
+      "excel-data-transformation-selective-r2-a2",
+      "excel-data-transformation-selective-r3-a1",
+      "excel-data-transformation-selective-r4-a1",
+      "excel-data-transformation-selective-r5-a3",
+      "excel-data-transformation-selective-r6-a1",
+      "excel-data-transformation-selective-r7-a1",
+      "excel-data-transformation-selective-r8-a1",
+      "excel-data-transformation-selective-r9-a1",
+      "excel-data-transformation-selective-r10-a1",
+      "excel-market-research-full-r1-a1",
+      "excel-market-research-full-r2-a1",
+      "excel-market-research-full-r3-a1",
+      "excel-market-research-full-r4-a1",
+      "excel-market-research-full-r5-a1",
+      "excel-market-research-full-r6-a1",
+      "excel-market-research-full-r7-a1",
+      "excel-market-research-full-r8-a1",
+      "excel-market-research-full-r9-a1",
+      "excel-market-research-full-r10-a1",
+      "excel-market-research-selective-r1-a1",
+      "excel-market-research-selective-r2-a1",
+      "excel-market-research-selective-r3-a1",
+      "excel-market-research-selective-r4-a1",
+      "excel-market-research-selective-r5-a1",
+      "excel-market-research-selective-r6-a1",
+      "excel-market-research-selective-r7-a1",
+      "excel-market-research-selective-r8-a1",
+      "excel-market-research-selective-r9-a1",
+      "excel-market-research-selective-r10-a1",
+      "market-chart-report-full-r1-a1",
+      "market-chart-report-full-r2-a1",
+      "market-chart-report-full-r3-a2",
+      "market-chart-report-full-r4-a1",
+      "market-chart-report-full-r5-a1",
+      "market-chart-report-full-r6-a1",
+      "market-chart-report-full-r7-a1",
+      "market-chart-report-full-r8-a1",
+      "market-chart-report-full-r9-a1",
+      "market-chart-report-full-r10-a1",
+      "market-chart-report-selective-r1-a1",
+      "market-chart-report-selective-r2-a1",
+      "market-chart-report-selective-r3-a1",
+      "market-chart-report-selective-r4-a1",
+      "market-chart-report-selective-r5-a2",
+      "market-chart-report-selective-r6-a1",
+      "market-chart-report-selective-r7-a1",
+      "market-chart-report-selective-r8-a1",
+      "market-chart-report-selective-r9-a1",
+      "market-chart-report-selective-r10-a1",
+      "market-validation-report-full-r1-a1",
+      "market-validation-report-full-r2-a1",
+      "market-validation-report-full-r3-a1",
+      "market-validation-report-full-r4-a1",
+      "market-validation-report-full-r5-a1",
+      "market-validation-report-full-r6-a1",
+      "market-validation-report-full-r7-a1",
+      "market-validation-report-full-r8-a1",
+      "market-validation-report-full-r9-a1",
+      "market-validation-report-full-r10-a1",
+      "market-validation-report-selective-r1-a1",
+      "market-validation-report-selective-r2-a1",
+      "market-validation-report-selective-r3-a1",
+      "market-validation-report-selective-r4-a1",
+      "market-validation-report-selective-r5-a1",
+      "market-validation-report-selective-r6-a1",
+      "market-validation-report-selective-r7-a1",
+      "market-validation-report-selective-r8-a1",
+      "market-validation-report-selective-r9-a1",
+      "market-validation-report-selective-r10-a2"
+    ],
+    "unresolved": []
+  },
+  "byTask": {
+    "excel-data-transformation": {
+      "successfulExecutions": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 127,
+          "durationMs": 982232,
+          "costCny": "2.34474184",
+          "usage": {
+            "inputTokens": 413025,
+            "cacheReadTokens": 4986496,
+            "cacheWriteTokens": 0,
+            "outputTokens": 164904
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 134,
+          "durationMs": 1059329,
+          "costCny": "2.3754272",
+          "usage": {
+            "inputTokens": 361996,
+            "cacheReadTokens": 5041280,
+            "cacheWriteTokens": 0,
+            "outputTokens": 181223
+          }
+        }
+      },
+      "initialAttempts": {
+        "full": {
+          "runs": 10,
+          "passed": 9,
+          "modelCalls": 129,
+          "durationMs": 1010022,
+          "costCny": "2.39481928",
+          "usage": {
+            "inputTokens": 416401,
+            "cacheReadTokens": 5122432,
+            "cacheWriteTokens": 0,
+            "outputTokens": 169640
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 8,
+          "modelCalls": 132,
+          "durationMs": 1063489,
+          "costCny": "2.36309112",
+          "usage": {
+            "inputTokens": 351995,
+            "cacheReadTokens": 4915328,
+            "cacheWriteTokens": 0,
+            "outputTokens": 182811
+          }
+        }
+      },
+      "allAttempts": {
+        "full": {
+          "runs": 11,
+          "passed": 10,
+          "modelCalls": 140,
+          "durationMs": 1077876,
+          "costCny": "2.5759496",
+          "usage": {
+            "inputTokens": 454906,
+            "cacheReadTokens": 5504640,
+            "cacheWriteTokens": 0,
+            "outputTokens": 180744
+          }
+        },
+        "selective": {
+          "runs": 13,
+          "passed": 10,
+          "modelCalls": 168,
+          "durationMs": 1356189,
+          "costCny": "3.02256848",
+          "usage": {
+            "inputTokens": 460262,
+            "cacheReadTokens": 6138112,
+            "cacheWriteTokens": 0,
+            "outputTokens": 232065
+          }
+        }
+      }
+    },
+    "excel-market-research": {
+      "successfulExecutions": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 119,
+          "durationMs": 987700,
+          "costCny": "2.32653136",
+          "usage": {
+            "inputTokens": 344602,
+            "cacheReadTokens": 4326784,
+            "cacheWriteTokens": 0,
+            "outputTokens": 183032
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 102,
+          "durationMs": 911320,
+          "costCny": "1.99280968",
+          "usage": {
+            "inputTokens": 290261,
+            "cacheReadTokens": 3070592,
+            "cacheWriteTokens": 0,
+            "outputTokens": 161183
+          }
+        }
+      },
+      "initialAttempts": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 119,
+          "durationMs": 987700,
+          "costCny": "2.32653136",
+          "usage": {
+            "inputTokens": 344602,
+            "cacheReadTokens": 4326784,
+            "cacheWriteTokens": 0,
+            "outputTokens": 183032
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 102,
+          "durationMs": 911320,
+          "costCny": "1.99280968",
+          "usage": {
+            "inputTokens": 290261,
+            "cacheReadTokens": 3070592,
+            "cacheWriteTokens": 0,
+            "outputTokens": 161183
+          }
+        }
+      },
+      "allAttempts": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 119,
+          "durationMs": 987700,
+          "costCny": "2.32653136",
+          "usage": {
+            "inputTokens": 344602,
+            "cacheReadTokens": 4326784,
+            "cacheWriteTokens": 0,
+            "outputTokens": 183032
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 102,
+          "durationMs": 911320,
+          "costCny": "1.99280968",
+          "usage": {
+            "inputTokens": 290261,
+            "cacheReadTokens": 3070592,
+            "cacheWriteTokens": 0,
+            "outputTokens": 161183
+          }
+        }
+      }
+    },
+    "market-chart-report": {
+      "successfulExecutions": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 79,
+          "durationMs": 247579,
+          "costCny": "0.91889832",
+          "usage": {
+            "inputTokens": 303833,
+            "cacheReadTokens": 1995008,
+            "cacheWriteTokens": 0,
+            "outputTokens": 28929
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 80,
+          "durationMs": 265192,
+          "costCny": "0.90260384",
+          "usage": {
+            "inputTokens": 282004,
+            "cacheReadTokens": 1754496,
+            "cacheWriteTokens": 0,
+            "outputTokens": 33552
+          }
+        }
+      },
+      "initialAttempts": {
+        "full": {
+          "runs": 10,
+          "passed": 9,
+          "modelCalls": 77,
+          "durationMs": 244325,
+          "costCny": "0.91381936",
+          "usage": {
+            "inputTokens": 303034,
+            "cacheReadTokens": 1936384,
+            "cacheWriteTokens": 0,
+            "outputTokens": 28787
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 9,
+          "modelCalls": 80,
+          "durationMs": 263942,
+          "costCny": "0.90021952",
+          "usage": {
+            "inputTokens": 281976,
+            "cacheReadTokens": 1753088,
+            "cacheWriteTokens": 0,
+            "outputTokens": 33268
+          }
+        }
+      },
+      "allAttempts": {
+        "full": {
+          "runs": 11,
+          "passed": 10,
+          "modelCalls": 85,
+          "durationMs": 267606,
+          "costCny": "1.0035936",
+          "usage": {
+            "inputTokens": 333960,
+            "cacheReadTokens": 2138240,
+            "cacheWriteTokens": 0,
+            "outputTokens": 31268
+          }
+        },
+        "selective": {
+          "runs": 11,
+          "passed": 10,
+          "modelCalls": 87,
+          "durationMs": 287472,
+          "costCny": "0.98495096",
+          "usage": {
+            "inputTokens": 309423,
+            "cacheReadTokens": 1898624,
+            "cacheWriteTokens": 0,
+            "outputTokens": 36270
+          }
+        }
+      }
+    },
+    "market-validation-report": {
+      "successfulExecutions": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 91,
+          "durationMs": 339476,
+          "costCny": "1.11823888",
+          "usage": {
+            "inputTokens": 323802,
+            "cacheReadTokens": 2486272,
+            "cacheWriteTokens": 0,
+            "outputTokens": 46398
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 87,
+          "durationMs": 317437,
+          "costCny": "1.00091128",
+          "usage": {
+            "inputTokens": 283499,
+            "cacheReadTokens": 1980032,
+            "cacheWriteTokens": 0,
+            "outputTokens": 44339
+          }
+        }
+      },
+      "initialAttempts": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 91,
+          "durationMs": 339476,
+          "costCny": "1.11823888",
+          "usage": {
+            "inputTokens": 323802,
+            "cacheReadTokens": 2486272,
+            "cacheWriteTokens": 0,
+            "outputTokens": 46398
+          }
+        },
+        "selective": {
+          "runs": 10,
+          "passed": 9,
+          "modelCalls": 87,
+          "durationMs": 316932,
+          "costCny": "0.99600176",
+          "usage": {
+            "inputTokens": 282922,
+            "cacheReadTokens": 1967744,
+            "cacheWriteTokens": 0,
+            "outputTokens": 43931
+          }
+        }
+      },
+      "allAttempts": {
+        "full": {
+          "runs": 10,
+          "passed": 10,
+          "modelCalls": 91,
+          "durationMs": 339476,
+          "costCny": "1.11823888",
+          "usage": {
+            "inputTokens": 323802,
+            "cacheReadTokens": 2486272,
+            "cacheWriteTokens": 0,
+            "outputTokens": 46398
+          }
+        },
+        "selective": {
+          "runs": 11,
+          "passed": 10,
+          "modelCalls": 95,
+          "durationMs": 345723,
+          "costCny": "1.09101888",
+          "usage": {
+            "inputTokens": 311512,
+            "cacheReadTokens": 2147072,
+            "cacheWriteTokens": 0,
+            "outputTokens": 47764
+          }
+        }
+      }
+    }
+  }
+}

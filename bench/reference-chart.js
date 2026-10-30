@@ -1,0 +1,16 @@
+const assert=(await import('node:assert/strict')).default;
+const r=await tools.mcp__excel__read_range({path:'Market_Data.xlsx',sheet:'RawData',range:'A4:P15'});
+const [header,...data]=r.structuredContent.values;
+const columns=['YY','Agriculture','Food','Metals'].map(name=>{const i=header.indexOf(name);assert.ok(i>=0);return i});
+const rows=[['Year','Agriculture','Food','Metals'],...data.filter(row=>row[columns[0]]>=2014&&row[columns[0]]<=2024).map(row=>columns.map(i=>row[i])).sort((a,b)=>a[0]-b[0])];
+assert.equal(rows.length,12);
+const path='MarketTrends.xlsx',sheet='Summary';
+await tools.mcp__excel__create_workbook({path,sheets:[sheet]});
+await tools.mcp__excel__write_range({path,sheet,at:'A1',rows});
+await tools.mcp__excel__format_range({path,sheet,range:'B2:D12',style:{number_format:'#,##0.0'}});
+await tools.mcp__excel__format_range({path,sheet,range:'A1:D1',style:{bold:true}});
+await tools.mcp__excel__create_chart({path,sheet,chart_type:'line',at:'F2',source:'Summary!A1:D12',options:{title:'Market trends',x_axis:{title:'Year'},y_axis:{title:'Million USD'},legend:'bottom'}});
+await tools.mcp__excel__set_sheet_layout({path,sheet,layout:{freeze_panes:'B2',print_setup:{orientation:'landscape',paper_size:'a4',fit_to_pages:{wide:1,tall:0},title_rows:'1:1'}}});
+const actual=(await tools.mcp__excel__read_range({path,sheet,range:'A1:D12'})).structuredContent.values;
+assert.deepEqual(actual.map(row=>row.map(v=>typeof v==='number'?Number(v.toPrecision(12)):v)),rows.map(row=>row.map(v=>typeof v==='number'?Number(v.toPrecision(12)):v)));
+return {rows:rows.length,inspection:(await tools.mcp__excel__describe_sheet({path,sheet})).structuredContent};

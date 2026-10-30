@@ -1,0 +1,47 @@
+{
+  "name": "@degraw4/dsh-tool-discovery",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Progressive tool-parameter documentation for DeepSeek Harness TypeScript PTC",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": "^22.19.0 || >=24"
+  },
+  "packageManager": "pnpm@11.28.5",
+  "exports": {
+    "./tool-docs": {
+      "types": "./lib/tool-docs.d.mts",
+      "default": "./lib/tool-docs.mjs"
+    },
+    "./mcp-client-documented": {
+      "types": "./lib/mcp-client-documented.d.mts",
+      "default": "./lib/mcp-client-documented.mjs"
+    }
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "README.md",
+    "patches/LICENSE.deepseek"
+  ],
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.5-alpha.1",
+    "@deepseek-ai/dsh-agent": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-tools": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-system-prompt": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-mcp-client": "0.2.1-alpha.2"
+  },
+  "scripts": {
+    "bootstrap": "node scripts/bootstrap.mjs",
+    "test": "node scripts/run.mjs test",
+    "typecheck": "node scripts/run.mjs typecheck",
+    "build": "node scripts/run.mjs build",
+    "bench:report": "python3 bench/report.py",
+    "bench:test": "python3 -m unittest discover -s bench -p \"test_*.py\"",
+    "release:check": "python3 scripts/check_release.py"
+  }
+}

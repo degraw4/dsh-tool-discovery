@@ -1,0 +1,37 @@
+{
+  "tasks": [
+    {
+      "id": "excel-market-research",
+      "inputTask": "excel-market-research",
+      "kind": "public-adapted",
+      "cohort": "development",
+      "promptPath": "tasks/finalpool/excel-market-research/docs/task.md",
+      "promptSha256": "6c5abc40f57b876c7ada9428ca71a6f12d8b9f5e9af33b3a497e6bb51360b4f8"
+    },
+    {
+      "id": "excel-data-transformation",
+      "kind": "public-adapted",
+      "inputTask": "excel-data-transformation",
+      "criteria": "Original check_local_improved.py with original groundtruth. Public task and evaluator; tool availability and DSH scaffold are adapted.",
+      "cohort": "development",
+      "promptPath": "tasks/finalpool/excel-data-transformation/docs/task.md",
+      "promptSha256": "3e2433364233eaae2548fe9ef80f77d078490548b3019933bcfb9cfeda5ccd0b"
+    },
+    {
+      "id": "market-chart-report",
+      "kind": "derived",
+      "inputTask": "excel-market-research",
+      "prompt": "Using Market_Data.xlsx, create a separate workbook MarketTrends.xlsx. On a sheet named Summary, put Year, Agriculture, Food, Metals in A1:D1. Copy the corresponding RawData values for 2014 through 2024 inclusive, ascending by year, into A2:D12. Keep numeric values and show one decimal place in B2:D12. Add one line chart anchored at F2, with exactly the three segment series and the years as categories, title \"Market trends\", horizontal axis title \"Year\", vertical axis title \"Million USD\", and legend at the bottom. Make the header row bold, freeze the first row and first column, and configure A4 landscape printing, one page wide and automatic height, repeating row 1 on each page. Save the workbook without changing Market_Data.xlsx. Use the available office and file tools; no terminal service is available.",
+      "criteria": "Check all 11 rows against public source; exactly 3 correctly referenced line series, title, legend, axes and anchor; numeric format, bold header, B2 freeze panes, A4 landscape, fit width 1 and repeat row 1. Original source hash unchanged.",
+      "cohort": "development"
+    },
+    {
+      "id": "market-validation-report",
+      "kind": "derived",
+      "inputTask": "excel-market-research",
+      "prompt": "Using Market_Data.xlsx, create MarketChecks.xlsx with an Audit sheet. Columns A:E must be Year, AgricultureYoY, FoodYoY, MetalsYoY, ReviewStatus. Include 2015 through 2024 ascending; calculate each year-on-year growth using the same segment in RawData and its previous year. Store fractional numeric rates (for example 0.025 for 2.5%) in B2:D11 and display them as 0.0%. Fill E2:E11 with Pending and add a list data-validation rule offering exactly Pending and Approved. Add one 3-color scale over B2:D11, with minimum red FF0000, midpoint at the 50th percentile in yellow FFFF00, and maximum green 00FF00. Turn A1:E11 into an Excel table named GrowthAudit, using TableStyleMedium9 with alternating row stripes. Freeze the header row. Save the file without modifying Market_Data.xlsx. Use the available office and file tools; no terminal service is available.",
+      "criteria": "Check all 10 rows and rates with tolerance 1e-6 against public source; Pending values, exact validation options and range, percent format, 3-color scale including percentile and colors, GrowthAudit table and style, A2 freeze panes, unchanged source.",
+      "cohort": "development"
+    }
+  ]
+}

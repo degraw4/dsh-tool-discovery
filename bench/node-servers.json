@@ -1,0 +1,10 @@
+{
+  "filesystem": {
+    "name": "@modelcontextprotocol/server-filesystem",
+    "version": "2.0.1"
+  },
+  "memory": {
+    "name": "@modelcontextprotocol/server-memory",
+    "version": "2025.8.4"
+  }
+}

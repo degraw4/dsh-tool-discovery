@@ -1,0 +1,34 @@
+--- a/tools.ts
++++ b/tools.ts
+@@ -23,6 +23,7 @@
+ import { assertSupportedJsonSchema } from '@deepseek-ai/dsh-tools'
+ import type { JsonSchemaNode } from '@deepseek-ai/dsh-tools'
+ import type { JsonValue } from '@deepseek-ai/dsh-util-values'
++import { snapshotJsonValue } from '@deepseek-ai/dsh-util-values'
+ 
+ /** Resolved options relevant to tool bridging. */
+ export interface ToolBridgeOptions {
+@@ -232,7 +233,7 @@
+     name,
+     description,
+     parameters: inputSchema,
+-    output: createOutput(rawName, supportedOutputSchema(options.outputSchema)),
++    output: createOutput(rawName, supportedOutputSchema(options.outputSchema), options.outputSchema),
+     execute: createExecutor(ctx, options, projections),
+     projectContent(exec: Readonly<ToolExecution>, result: Readonly<ToolExecutionResult>) {
+       const projection = projections.get(exec)
+@@ -247,8 +248,13 @@
+ }
+ 
+ /** Build the canonical result schema and existing Native text projection. */
+-function createOutput(rawName: string, structuredSchema: JsonSchemaNode | undefined): ToolDefinition['output'] {
++function createOutput(rawName: string, structuredSchema: JsonSchemaNode | undefined, declaredSchema: unknown): ToolDefinition['output'] {
++  const documentationSchema = snapshotJsonValue(declaredSchema)
++  if (declaredSchema !== undefined && documentationSchema === undefined) {
++    throw new Error(`MCP tool "${rawName}" output documentation must be lossless JSON`)
++  }
+   return {
++    ...documentationSchema === undefined ? {} : { documentation: { field: 'structuredContent', schema: documentationSchema } },
+     schema: {
+       type: 'object',
+       properties: {

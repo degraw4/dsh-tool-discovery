@@ -1,0 +1,235 @@
+--- a/excel_mcp/operations/inspect.py
++++ b/excel_mcp/operations/inspect.py
+@@ -1,6 +1,9 @@
+ """Read-only descriptions of workbooks, sheets and folders."""
+ 
+ from pathlib import Path
++import json
++from excel_mcp.errors import LimitExceededError
++from excel_mcp.operations.inspection_details import Detail, InspectionDetails, inspect_details
+ from typing import Literal, cast
+ 
+ from openpyxl.workbook import Workbook
+@@ -90,7 +93,7 @@
+     width: float
+ 
+ 
+-class SheetDetails(BaseModel):
++class SheetDetails(InspectionDetails):
+     used_range: str
+     freeze_panes: str | None = None
+     auto_filter: str | None = None
+@@ -137,8 +140,10 @@
+     )
+ 
+ 
+-def describe_sheet(sheet: Worksheet) -> SheetDetails:
+-    return SheetDetails(
++def describe_sheet(sheet: Worksheet, *, details: list[Detail] | None = None, range: str | None = None, max_items: int = 256, max_bytes: int = 32768) -> SheetDetails:
++    selected = inspect_details(sheet, details, range, max_items).model_dump(exclude_unset=True) if details else {}
++    result = SheetDetails(
++        **selected,
+         used_range=str(described_used_range(sheet)),
+         freeze_panes=sheet.freeze_panes,
+         auto_filter=sheet.auto_filter.ref,
+@@ -173,6 +178,10 @@
+         protected=bool(sheet.protection.sheet),
+         view=read_view(sheet),
+     )
++    if details and len(json.dumps(result.model_dump(mode='json', exclude_defaults=True), ensure_ascii=False, separators=(',', ':')).encode('utf8')) > max_bytes:
++        raise LimitExceededError(f'Inspection response exceeds {max_bytes} bytes; request fewer details or a smaller range.')
++    return result
++
+ 
+ 
+ def list_workbooks(directory: Path, recursive: bool, limit: int) -> list[Path]:
+--- a/excel_mcp/operations/inspection_details.py
++++ b/excel_mcp/operations/inspection_details.py
+@@ -0,0 +1,155 @@
++"""Opt-in, bounded facts read from a worksheet; no edits and no task grading."""
++from typing import Literal
++from pydantic import BaseModel
++from openpyxl.utils.cell import get_column_letter
++from openpyxl.worksheet.worksheet import Worksheet
++from excel_mcp.errors import InvalidArgumentError, LimitExceededError
++from excel_mcp.refs import parse_range
++
++Detail = Literal['formats', 'print_setup', 'chart_details', 'rules', 'table_details']
++
++class CellFormat(BaseModel):
++    cell: str
++    number_format: str
++    bold: bool
++
++class PrintSettings(BaseModel):
++    orientation: str | None
++    paper_size: str | None
++    fit_to_width: int | None
++    fit_to_height: int | None
++    fit_to_page: bool | None
++    title_rows: str | None
++    title_columns: str | None
++
++class SeriesDetails(BaseModel):
++    values: str | None
++    categories: str | None
++    title: str | None
++
++class ChartDetails(BaseModel):
++    index: int
++    type: str
++    title: str | None
++    x_axis_title: str | None
++    y_axis_title: str | None
++    legend: str | None
++    anchor: str | None
++    series: list[SeriesDetails]
++
++class Threshold(BaseModel):
++    type: str
++    value: float | str | None
++
++class ColorInfo(BaseModel):
++    type: str
++    value: str | int | None
++    tint: float
++
++class RuleDetails(BaseModel):
++    range: str
++    type: str
++    priority: int
++    thresholds: list[Threshold]
++    colors: list[ColorInfo]
++    formulas: list[str]
++    details_complete: bool
++    note: str | None
++
++class TableDetails(BaseModel):
++    name: str
++    range: str
++    style: str | None
++    striped_rows: bool | None
++    striped_columns: bool | None
++    first_column: bool | None
++    last_column: bool | None
++
++class InspectionDetails(BaseModel):
++    table_details: list[TableDetails] | None = None
++    formats: list[CellFormat] | None = None
++    print_setup: PrintSettings | None = None
++    chart_details: list[ChartDetails] | None = None
++    rules: list[RuleDetails] | None = None
++
++def title_text(title) -> str | None:
++    if title is None:
++        return None
++    rich = title.tx.rich if title.tx else None
++    if rich is not None:
++        return ''.join(run.t for paragraph in rich.p for run in paragraph.r)
++    return title.tx.strRef.f if title.tx and title.tx.strRef else None
++
++def source_ref(source) -> str | None:
++    if source is None:
++        return None
++    for key in ['numRef', 'strRef']:
++        ref = getattr(source, key, None)
++        if ref is not None:
++            return ref.f
++    return None
++
++def inspect_details(sheet: Worksheet, details: list[Detail], area: str | None, max_items: int) -> InspectionDetails:
++    """Return selected facts, counting cells, charts, series, and rules together."""
++    result = InspectionDetails()
++    count = 0
++    def admit(size: int) -> None:
++        nonlocal count
++        count += size
++        if count > max_items:
++            raise LimitExceededError(f'Inspection item limit {max_items} exceeded; reduce range or requested details.')
++    if 'formats' in details:
++        if not area:
++            raise InvalidArgumentError('A bounded range is required for formats inspection.')
++        bounds = parse_range(area)
++        admit(bounds.size)
++        result.formats = [CellFormat(cell=cell.coordinate, number_format=cell.number_format, bold=bool(cell.font.bold))
++            for row in sheet.iter_rows(min_row=bounds.min_row, max_row=bounds.max_row, min_col=bounds.min_col, max_col=bounds.max_col) for cell in row]
++    if 'print_setup' in details:
++        page = sheet.page_setup
++        result.print_setup = PrintSettings(orientation=page.orientation, paper_size=str(page.paperSize) if page.paperSize is not None else None,
++            fit_to_width=page.fitToWidth, fit_to_height=page.fitToHeight,
++            fit_to_page=sheet.sheet_properties.pageSetUpPr.fitToPage if sheet.sheet_properties.pageSetUpPr else None,
++            title_rows=sheet.print_title_rows, title_columns=sheet.print_title_cols)
++    if 'table_details' in details:
++        result.table_details = []
++        for table in sheet.tables.values():
++            admit(1)
++            style = table.tableStyleInfo
++            result.table_details.append(TableDetails(name=table.name, range=table.ref, style=style.name if style else None,
++                striped_rows=style.showRowStripes if style else None, striped_columns=style.showColumnStripes if style else None,
++                first_column=style.showFirstColumn if style else None, last_column=style.showLastColumn if style else None))
++    if 'chart_details' in details:
++        from excel_mcp.operations import chartex
++        if chartex.modern_charts(sheet):
++            raise InvalidArgumentError('Detailed inspection supports classic charts; modern charts are available only in the normal summary.')
++        result.chart_details = []
++        for index, chart in enumerate(sheet._charts):
++            admit(1)
++            anchor = chart.anchor if isinstance(chart.anchor, str) else (
++                f'{get_column_letter(chart.anchor._from.col + 1)}{chart.anchor._from.row + 1}' if hasattr(chart.anchor, '_from') else None)
++            series = []
++            for plot in chart._charts:
++                for item in plot.series:
++                    admit(1)
++                    series.append(SeriesDetails(values=source_ref(item.val or item.yVal),categories=source_ref(item.cat or item.xVal),
++                        title=item.tx.strRef.f if item.tx and item.tx.strRef else item.tx.v if item.tx else None))
++            result.chart_details.append(ChartDetails(index=index+1,type=chart.tagname,title=title_text(chart.title),
++                x_axis_title=title_text(chart.x_axis.title) if hasattr(chart,'x_axis') else None,
++                y_axis_title=title_text(chart.y_axis.title) if hasattr(chart,'y_axis') else None,
++                legend=chart.legend.position if chart.legend else None,anchor=anchor,series=series))
++    if 'rules' in details:
++        from excel_mcp.operations.conditional_x14 import extended_rules
++        if extended_rules(sheet):
++            raise InvalidArgumentError('Extended conditional rules are not supported by detailed inspection; use the normal summary.')
++        result.rules = []
++        for entry, rules in sheet.conditional_formatting._cf_rules.items():
++            for rule in rules:
++                admit(1)
++                scale = rule.colorScale
++                thresholds = [Threshold(type=p.type,value=p.val) for p in scale.cfvo] if scale else []
++                colors = [ColorInfo(type=c.type,value=c.value,tint=c.tint) for c in scale.color] if scale else []
++                result.rules.append(RuleDetails(range=str(entry.sqref),type=rule.type,priority=rule.priority,
++                    thresholds=thresholds,colors=colors,formulas=list(rule.formula or []),
++                    details_complete=rule.type=='colorScale',note=None if rule.type=='colorScale' else 'Only rule type and formula are inspected for this rule kind.'))
++    return result
+--- a/excel_mcp/server/sheet_tools.py
++++ b/excel_mcp/server/sheet_tools.py
+@@ -7,6 +7,7 @@
+ from excel_mcp.operations import inspect, line_edits, sheet_copy, sheets
+ from excel_mcp.operations.calculated import formula_values
+ from excel_mcp.operations.inspect import SheetDetails
++from excel_mcp.operations.inspection_details import Detail
+ from excel_mcp.package.lines import Axis
+ from excel_mcp.server.params import LineCount, LineIndex, SheetName, WorkbookPath
+ from excel_mcp.server.registry import ToolRegistry
+@@ -19,12 +20,18 @@
+ 
+ def register(tools: ToolRegistry, workspace: Workspace) -> None:
+     @tools.reader("Describe sheet")
+-    def describe_sheet(path: WorkbookPath, sheet: SheetName) -> SheetDetails:
++    def describe_sheet(path: WorkbookPath, sheet: SheetName,
++        details: Annotated[list[Detail], Field(description="Optional saved-file facts: formats, print_setup, chart_details, rules, table_details. Omit for the normal summary.")] = [],
++        range: Annotated[str | None, Field(description="Bounded cell range required for formats; e.g. A1:D12.")] = None,
++        max_items: Annotated[int, Field(ge=1, le=1000, description="Total cells, charts, series and rules in requested details.")] = 256,
++        max_bytes: Annotated[int, Field(ge=1024, le=65536, description="Maximum UTF-8 response bytes when details are requested; oversized responses are rejected.")] = 32768,
++    ) -> SheetDetails:
+         """Describe a sheet: used range, panes, merges and everything on it (tables, charts,
+         PivotTables, slicers, images, notes, hyperlinks, validation, conditional formats,
+-        sparklines...) with names and cells. Slow on very large files."""
++        sparklines...) with names and cells. Slow on very large files.
++        Select details to inspect saved formatting, printing, classic chart axes and series, table styles or color-scale thresholds without editing the file. Requested detail names are returned as fields of structuredContent beside the normal summary. Returns observed facts, not task grades. Never infer a missing setting from a field omitted by the normal summary."""
+         with workspace.read(path) as workbook:
+-            return inspect.describe_sheet(get_sheet(workbook, sheet))
++            return inspect.describe_sheet(get_sheet(workbook, sheet), details=details, range=range, max_items=min(max_items, workspace.limits.max_read_cells), max_bytes=max_bytes)
+ 
+     @tools.writer("Create sheet")
+     def create_sheet(

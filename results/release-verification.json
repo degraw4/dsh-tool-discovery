@@ -1,0 +1,83 @@
+{
+  "verifiedOn": "2026-10-31",
+  "nodeVersion": "22.19.0",
+  "pluginTests": 25,
+  "pythonTests": 11,
+  "typecheck": "passed",
+  "build": "passed",
+  "recordedAccounting": "87 attempts and 887 request usages reproduce exactly; 80 first-success executions selected by ordinal",
+  "offlinePreflight": [
+    {
+      "arm": "full",
+      "modelCalls": 0,
+      "tools": 78,
+      "sdkBytes": 92682,
+      "result": [
+        {
+          "type": "text",
+          "text": "real tools, documentation, shared workspace and isolation verified"
+        }
+      ],
+      "grading": {
+        "task": "market-chart-report",
+        "kind": "derived",
+        "passed": true,
+        "checks": {
+          "source_unchanged": true,
+          "sheet_exists": true,
+          "headers": true,
+          "values": true,
+          "number_format": true,
+          "header_bold": true,
+          "freeze_panes": true,
+          "print_layout": true,
+          "print_titles": true,
+          "line_chart": true,
+          "chart_title": true,
+          "axis_titles": true,
+          "legend": true,
+          "anchor": true,
+          "series": true
+        },
+        "boundary": "Programmatic workbook content and structure checks, not a rendered visual review. Derived task, not official benchmark score."
+      }
+    },
+    {
+      "arm": "selective",
+      "modelCalls": 0,
+      "tools": 78,
+      "sdkBytes": 72587,
+      "result": [
+        {
+          "type": "text",
+          "text": "real tools, documentation, shared workspace and isolation verified"
+        }
+      ],
+      "grading": {
+        "task": "market-chart-report",
+        "kind": "derived",
+        "passed": true,
+        "checks": {
+          "source_unchanged": true,
+          "sheet_exists": true,
+          "headers": true,
+          "values": true,
+          "number_format": true,
+          "header_bold": true,
+          "freeze_panes": true,
+          "print_layout": true,
+          "print_titles": true,
+          "line_chart": true,
+          "chart_title": true,
+          "axis_titles": true,
+          "legend": true,
+          "anchor": true,
+          "series": true
+        },
+        "boundary": "Programmatic workbook content and structure checks, not a rendered visual review. Derived task, not official benchmark score."
+      }
+    }
+  ],
+  "liveCallsDuringReleaseValidation": 0,
+  "boundary": "Local release validation, not an additional paid benchmark or a CI result."
+}

@@ -1,0 +1,38 @@
+{
+  "model": "deepseek-flash",
+  "thinking": "enabled",
+  "reasoningEffort": "high",
+  "maxOutputTokens": 65536,
+  "taskCount": 4,
+  "taskOrigins": {
+    "publicAdapted": 2,
+    "derived": 2
+  },
+  "repeatsPerTaskPerArm": 10,
+  "tools": 78,
+  "deferredTools": 9,
+  "alwaysInline": [
+    "mcp__excel__format_range",
+    "mcp__excel__set_sheet_layout"
+  ],
+  "inputSchemaThresholdBytes": 1024,
+  "recordedAttempts": 87,
+  "recordedModelRequests": 887,
+  "selectedSuccessfulExecutions": 80,
+  "selectionRule": "First normally completed and grader-passing attempt per task, strategy and repeat. Conditional engineering sample, not one-shot success probability.",
+  "dshCommit": "d743267388641bc76f17c45ce8b4c231aed1d32c",
+  "toolathlonCommit": "9be8d8fe07a497b18ee61e3f2ae694e9797f39eb",
+  "ratesCnyPerMillionTokens": {
+    "inputTokens": 2,
+    "cacheReadTokens": 0.04,
+    "cacheWriteTokens": 2,
+    "outputTokens": 8
+  },
+  "billingReconciled": false,
+  "boundary": "Four fixed development tasks. Full numeric attempt accounting retained; no official Toolathlon score or quality non-inferiority claim.",
+  "separatePreliminaryAttempt": {
+    "knownCostCny": "0.15548280",
+    "unknownUsageRequests": 1,
+    "includedInComparison": false
+  }
+}

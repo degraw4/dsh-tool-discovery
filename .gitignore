@@ -1,0 +1,14 @@
+node_modules/
+.local/
+.ci/
+lib/
+.cache/
+__pycache__/
+*.pyc
+tsconfig.dsh.json
+tsconfig.check.json
+.env
+.env.*
+*.key
+*.pem
+*.log

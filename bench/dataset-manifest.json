@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/hkust-nlp/Toolathlon.git",
+  "commit": "9be8d8fe07a497b18ee61e3f2ae694e9797f39eb",
+  "files": {
+    "tasks/finalpool/excel-market-research/initial_workspace/Market_Data.xlsx": "f60f0d8fb5f9b4e7c598fc7d647fde221b6af8adb2cc2e62abe612b330a62b55",
+    "tasks/finalpool/excel-market-research/groundtruth_workspace/segment_growth_rates.xlsx": "8ae9511d18da5cc96637b9f17104c28915fb5914ee6d17ace6b147dad6120ba8",
+    "tasks/finalpool/excel-market-research/evaluation/check_local.py": "979d851c842f6d5d0068af7c51105986693be2bce9de0de264258b580e1ef15e",
+    "tasks/finalpool/excel-market-research/evaluation/main.py": "f3ea5fa444fac74f4a7f28ae7128f1b8cba97be34b7ba2a4cc52b8cb6315a266",
+    "tasks/finalpool/excel-market-research/docs/task.md": "6c5abc40f57b876c7ada9428ca71a6f12d8b9f5e9af33b3a497e6bb51360b4f8",
+    "tasks/finalpool/excel-market-research/docs/agent_system_prompt.md": "dd10d7cac47b0c35a7f43e894c0c014d059970202d54f7c8578e367f76b0ebad",
+    "tasks/finalpool/excel-data-transformation/initial_workspace/Household_Appliances.xlsx": "0db0a07d8b32c96b42f9441f78acf27333f4d719fc8d488c08c316a51e92defe",
+    "tasks/finalpool/excel-data-transformation/initial_workspace/Format_Example.xlsx": "a419bcc43fd3ebc0c5596c293dad07ad11bec2ee58b62224e952a8fe2de4519b",
+    "tasks/finalpool/excel-data-transformation/groundtruth_workspace/Processed.xlsx": "353a26c23340e694928f3c38ae033d8ff4d54ee41fc906ea7a8938cc4ed3d506",
+    "tasks/finalpool/excel-data-transformation/evaluation/README.md": "b2fdd3ce24d9d07d9a72c5efed22bba4c53277b943c3888619d298b78ef9982e",
+    "tasks/finalpool/excel-data-transformation/evaluation/main.py": "575a77c1b8225a98f4735bb7e7adfedfd84bba45565d7ffd180c6c99c7dcebb5",
+    "tasks/finalpool/excel-data-transformation/evaluation/check_local_improved.py": "1ffefb745180924570d8b392213e11a8179a8d9fd1a52e98107c1deab62704bf",
+    "tasks/finalpool/excel-data-transformation/docs/task.md": "5cb5ead96d1560c54fa15b50903096d99e3c40b2c1685d2d99a3b4a529d77d43",
+    "tasks/finalpool/excel-data-transformation/docs/agent_system_prompt.md": "dd10d7cac47b0c35a7f43e894c0c014d059970202d54f7c8578e367f76b0ebad"
+  },
+  "notice": "Evaluation only. Original data and evaluators are obtained from the pinned upstream repository, not relicensed as this package."
+}
